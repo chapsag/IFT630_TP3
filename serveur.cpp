@@ -69,7 +69,7 @@ int main()
         addr_size = sizeof serverStorage;
         newSocket = accept(serverSocket, (struct sockaddr *) &serverStorage, &addr_size);
 
-        if(pthread_create(&tId[i++], NULL, socketThread, &newSocket) !=0)
+        if( pthread_create(&tId[i++], NULL, socketThread, &newSocket) !=0)
             cout << "Faile dto create thread" << endl; 
 
         if( i >= 50)
