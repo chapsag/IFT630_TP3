@@ -39,8 +39,46 @@ void * socketThread(void *arg)
 }
 
 int main() 
-{
-    int serverSocket, newSocket;
+{   
+
+
+    int server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+    if(server != -1) {
+        cout << "Socket error" << endl;
+    }
+
+    const short port = 9999;
+    sockaddr_in addr;
+    addr.sin_addr.s_addr = INADDR_ANY;
+    addr.sin_port = htons(port);
+    addr.sin_family = AF_INET;
+
+    int res = bind(server,(sockaddr*) &addr, sizeof(addr));
+    if(res != -1){
+        cout << "Binding error" << endl;
+    }
+
+    res = listen(server,SOMAXCONN);
+    if (res != -1) {
+        cout << "Listen error" << endl;
+    }
+
+    cout << "Serveur démarre sur le port " << port << endl;
+
+    sockaddr_in from = {0};
+    socklen_t addrlen = sizeof(addr);
+    int newClient = accept(server, (sockaddr*) &from, &addrlen);
+    
+    if (newClient != -1) {
+        cout << "Connection reussi" << endl;
+    }
+
+    close(server);
+    return 0;
+
+
+    /*int serverSocket, newSocket;
 
     struct sockaddr_in serverAddr;
     struct sockaddr_storage serverStorage;
@@ -81,6 +119,7 @@ int main()
           }
           i = 0;
         }
-    }
+    }*/
+
     return 0;
 }

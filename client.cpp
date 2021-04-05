@@ -8,8 +8,13 @@
 #include <unistd.h> // for close
 #include<pthread.h>
 #include <iostream>
+#include <errno.h>
 
 using namespace std;
+
+int error = errno;
+//short htons(short value); local -> reseau
+//short ntohs(short value); reseau -> local
 
 void * clientThread(void * arg) 
 {
@@ -46,8 +51,35 @@ void * clientThread(void * arg)
 }
 
 int main() 
-{
-    int i = 0;
+{   
+
+    int clientSocket;
+    int port = 6666;
+    const char* ipadrress = "127.0.0.1";
+
+
+    clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    
+    sockaddr_in server;
+    server.sin_addr.s_addr = inet_addr(ipadrress);
+    server.sin_family = AF_INET;
+    server.sin_port = htons(port);
+
+    sockaddr_in addr = {0};
+    socklen_t len = sizeof(addr);
+    
+    // int newClient = accept(server, (sockaddr*)&addr, &len);
+
+    if (connect(clientSocket, (struct sockaddr *) &server, sizeof(server)) != 0) {
+        cout << "This is a problem" << endl;
+    }
+
+    cout << "Socket connected" << endl;
+    close(clientSocket); 
+
+
+
+    /*int i = 0;
     pthread_t tId[51];
 
     while(i < 50) 
@@ -64,7 +96,7 @@ int main()
     {
         pthread_join(tId[i++], NULL);
         cout << i << endl;
-    }
+    }*/
     
     return 0; 
 }
