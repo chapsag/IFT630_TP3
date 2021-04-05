@@ -2,7 +2,7 @@
 /*******************************************************************/
 /*                                                                 */
 /*  Cette classe permet de creer des objets de type processus avec */
-/*  des operations pour creer un processu, detruire un processus   */
+/*  des operations pour creer un processus, detruire un processus   */
 /*  et attendre la fin d'execution d'un processus.                 */
 /*                                                                 */
 /*******************************************************************/
