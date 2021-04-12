@@ -53,7 +53,7 @@ void * clientThread(void * arg)
 int main() 
 {   
 
-    int clientSocket;
+    /*int clientSocket;
     int port = 6666;
     const char* ipadrress = "127.0.0.1";
 
@@ -75,11 +75,11 @@ int main()
     }
 
     cout << "Socket connected" << endl;
-    close(clientSocket); 
+    close(clientSocket); */
 
 
 
-    /*int i = 0;
+    int i = 0;
     pthread_t tId[51];
 
     while(i < 50) 
@@ -96,7 +96,7 @@ int main()
     {
         pthread_join(tId[i++], NULL);
         cout << i << endl;
-    }*/
+    }
     
     return 0; 
 }

@@ -8,12 +8,16 @@
 #include <unistd.h> // for close
 #include<pthread.h>
 #include <iostream>
+#include "semlib.h"
+#include "getkey.cc"
 
 using namespace std;
 
 char client_message[2000];
 char buffer[1024];
-pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
+//pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
+
+//Sem mutex1;
 
 void * socketThread(void *arg) 
 {
@@ -21,14 +25,14 @@ void * socketThread(void *arg)
     recv(newSocket, client_message, 2000, 0); //use to get a message from a socket
 
 
-    pthread_mutex_lock(&mutex1); // Entrée Section critique
+    //pthread_mutex_lock(&mutex1); // Entrée Section critique
     char *message = (char*) malloc(sizeof(client_message)+20);
     strcpy(message, "Hello Client: ");
     strcat(message, client_message);
     strcat(message, "\n");
     strcpy(buffer, message);
     free(message);
-    pthread_mutex_unlock(&mutex1); // Sortie section critique
+    //pthread_mutex_unlock(&mutex1); // Sortie section critique
 
     sleep(1);
 
@@ -40,9 +44,26 @@ void * socketThread(void *arg)
 
 int main() 
 {   
+    
+   /* mutex1 = Sem(getkey("gofp2701"),1);
+    char *message = "Hello";
+    int i = 1;
+
+    mutex1.P();
+    strcpy(message, "Hello Client: ");
+    strcat(message, client_message);
+    strcat(message, "\n");
+    strcpy(buffer, message);
+    free(message);
+    mutex1.V(); */
 
 
-    int server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    // Pcs(/*Code du serveur à lancer*/)
+
+
+
+
+    /*int server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     if(server != -1) {
         cout << "Socket error" << endl;
@@ -75,10 +96,10 @@ int main()
     }
 
     close(server);
-    return 0;
+    return 0;*/
 
 
-    /*int serverSocket, newSocket;
+    int serverSocket, newSocket;
 
     struct sockaddr_in serverAddr;
     struct sockaddr_storage serverStorage;
@@ -119,7 +140,7 @@ int main()
           }
           i = 0;
         }
-    }*/
+    }
 
     return 0;
 }
