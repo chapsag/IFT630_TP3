@@ -10,13 +10,31 @@
 #include <iostream>
 #include <errno.h>
 
+#include <iostream>
+#include <string>
+#include <cstring>
+
+#include <signal.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+
+#include "getkey.cc"
+#include "pcslib.h"
+#include "msglib.h"
+#include "memlib.h"
+
+#include "msg.h"
+
 using namespace std;
 
 int error = errno;
 //short htons(short value); local -> reseau
 //short ntohs(short value); reseau -> local
 
-void * clientThread(void * arg) 
+/*void * clientThread(void * arg) 
 {
 
     cout << "In thread" << endl;
@@ -48,10 +66,27 @@ void * clientThread(void * arg)
 
     close(clientSocket);
     pthread_exit(NULL);
-}
+}*/
 
 int main() 
 {   
+
+
+    char cip[] = "gofp270"; 
+    key_t key = 12312323;
+    Port port = Port(key);
+
+
+    msgbuf msg;
+
+    //msg.m_texte = "P";
+    msg.m_type = 1;
+
+    port.Envoie(&msg, sizeof(msg)); 
+    //cout << "accepted reception ok" << endl; 
+    cout << msg.m_texte << endl;
+    
+
 
     /*int clientSocket;
     int port = 6666;
@@ -79,7 +114,7 @@ int main()
 
 
 
-    int i = 0;
+    /*int i = 0;
     pthread_t tId[51];
 
     while(i < 50) 
@@ -96,7 +131,7 @@ int main()
     {
         pthread_join(tId[i++], NULL);
         cout << i << endl;
-    }
+    }*/
     
     return 0; 
 }

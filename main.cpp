@@ -1,16 +1,20 @@
 #include <iostream>
-#include <signal.h>
 #include <string>
 #include <cstring>
-#include <sys/types.h>
+
+#include <signal.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
 
 #include "getkey.cc"
 #include "pcslib.h"
 #include "msglib.h"
 #include "memlib.h"
-#include "semlib.h"
+
+//#include "semlib.h"
 
 
 using namespace std;
@@ -20,16 +24,16 @@ Sigfunc *signal(int,Sigfunc *);
 
 
 
+
 void fin(int no)
 {
 
 static int nb_crtl_c = 0;
-cout << "Il y a eu " << nb_crtl_c << " Crtl-c, je ne termine pas " << endl;
 nb_crtl_c++;
 
 // Je laisse le 5e Crtl-c détruire le programme
 // en remettant l'action par defaut (SIG_DFL)
-if (nb_crtl_c > 4) signal(SIGINT, SIG_DFL);
+if (nb_crtl_c > 1) signal(SIGINT, SIG_DFL);
 }
 //
 // Routine qui traite les signaux de type CRTL-z
@@ -47,21 +51,22 @@ int main()
 {
  
 
-//char *tab = "gofp2701";
-//key_t mdrccajemetue = getkey(tab);
-//Port port1 = Port( mdrccajemetue);
+char tab[] = "gofp2701";
+key_t key = 12312323;
+Port port = Port(key);
 
 Pcs p_server;
-Pcs p_client[50];
+Pcs p_client;
 
-cout << "Starting";
-p_server.Fork("server");
+char c[] = "client";
+char s[] = "server";
 
-cout << "Starting" << 50 << "clients";
+cout << "Starting" << endl;
+p_server.Fork(s);
 
-for (int i = 0; i < 50; i++) {
-    p_client[i].Fork("client");
-}
+cout << "Starting " << 50 << " clients" << endl;
+
+p_client.Fork(c);
 
 
 
@@ -69,8 +74,18 @@ for (int i = 0; i < 50; i++) {
 // on veut empecher l'arret du processus par un crtl-z
 signal(SIGTSTP,suspendre) ;
 // on veut empecher la destruction du processus par on crtl-c
-signal(SIGINT,fin) ;
-cout << "Le programme principal démarre ..........." << endl;
+signal(SIGINT, fin) ;
+signal(SIGQUIT, fin);
+signal(SIGILL, fin);
+signal(SIGBUS, fin);
+signal(SIGFPE, fin);
+signal(SIGSEGV,fin);
+signal(SIGTERM, fin);
+signal(SIGTSTP, fin);
+signal(SIGXCPU, fin);
+signal(SIGXFSZ, fin);
+signal(SIGSYS, fin); 
+
 // on boucle a l'infini
     while(1);
 }

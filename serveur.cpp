@@ -1,25 +1,29 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
-#include<string.h>
-#include <arpa/inet.h>
-#include <fcntl.h> // for open
-#include <unistd.h> // for close
-#include<pthread.h>
 #include <iostream>
-#include "semlib.h"
+#include <string>
+#include <cstring>
+
+#include <signal.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+
 #include "getkey.cc"
+#include "pcslib.h"
+#include "msglib.h"
+#include "memlib.h"
+
+#include "msg.h"
 
 using namespace std;
 
-char client_message[2000];
-char buffer[1024];
+
 //pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
 //Sem mutex1;
 
-void * socketThread(void *arg) 
+/*void * socketThread(void *arg) 
 {
     int newSocket = *((int *)arg);
     recv(newSocket, client_message, 2000, 0); //use to get a message from a socket
@@ -40,11 +44,28 @@ void * socketThread(void *arg)
     cout << "Exit socketThread \n" << endl;
     close(newSocket);
     pthread_exit(NULL);
-}
+}*/
 
 int main() 
 {   
     
+    char cip[] = "gofp270"; 
+    key_t key = 12312323;
+    Port port = Port(key);
+
+
+    msgbuf msg;
+
+    //msg.m_texte = "P";
+    msg.m_type = 1;
+
+    while (true) {port.Recoit(&msg, sizeof(msg)); cout << "accepted reception ok" << endl; cout << msg.m_texte << endl;}
+    
+
+
+    
+
+
    /* mutex1 = Sem(getkey("gofp2701"),1);
     char *message = "Hello";
     int i = 1;
@@ -99,7 +120,7 @@ int main()
     return 0;*/
 
 
-    int serverSocket, newSocket;
+   /* int serverSocket, newSocket;
 
     struct sockaddr_in serverAddr;
     struct sockaddr_storage serverStorage;
@@ -140,7 +161,7 @@ int main()
           }
           i = 0;
         }
-    }
+    }*/
 
     return 0;
 }
