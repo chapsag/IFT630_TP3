@@ -94,8 +94,8 @@ int main()
 
     while (!feof(fd)) {
 
-        if ((bytes_read = fread(&msg, 1, sizeof(msg), fd)) > 0)
-            send(sock, buffer, bytes_read, 0);
+        if ((bytes_read = fread(&msg.m_texte, 1, sizeof(msg), fd)) > 0)
+            port.Envoie(&msg, sizeof(msg));
         else
             break;
     }

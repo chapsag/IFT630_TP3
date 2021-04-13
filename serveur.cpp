@@ -68,16 +68,14 @@ int main()
         size_t datasize;
         FILE* fd = fopen("file.txt", "wb");
         
-        while (!received)
-        {
         
         fwrite(&msg.m_texte, 1, sizeof(msg.m_texte), fd);
-        }
 
         fclose(fd);
     }
     
 
+// Copie -> temps de la copie pour pas de changement pdt la copie
 
     
 
