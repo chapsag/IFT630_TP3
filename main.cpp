@@ -51,12 +51,8 @@ int main()
 {
  
 
-char tab[] = "gofp2701";
-key_t key = 12312323;
-Port port = Port(key);
-
 Pcs p_server;
-Pcs p_client;
+Pcs p_client[3];
 
 char c[] = "client";
 char s[] = "server";
@@ -64,9 +60,12 @@ char s[] = "server";
 cout << "Starting" << endl;
 p_server.Fork(s);
 
-cout << "Starting " << 50 << " clients" << endl;
 
-p_client.Fork(c);
+
+for (int i = 0; i < 3; i++) {
+    p_client[i].Fork(c);
+}
+
 
 
 

@@ -73,7 +73,7 @@ int main()
 
 
     char cip[] = "gofp270"; 
-    key_t key = 12312323;
+    key_t key = KEY_PORT;
     Port port = Port(key);
 
 
@@ -83,9 +83,24 @@ int main()
     msg.m_type = 1;
 
     port.Envoie(&msg, sizeof(msg)); 
-    //cout << "accepted reception ok" << endl; 
+    cout << "accepted send ok" << endl; 
     cout << msg.m_texte << endl;
     
+    FILE *fd = fopen("file.txt", "rb");
+
+    size_t rret, wret;
+
+    int bytes_read;
+
+    while (!feof(fd)) {
+
+        if ((bytes_read = fread(&msg, 1, sizeof(msg), fd)) > 0)
+            send(sock, buffer, bytes_read, 0);
+        else
+            break;
+    }
+
+    fclose(fd);
 
 
     /*int clientSocket;

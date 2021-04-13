@@ -50,7 +50,7 @@ int main()
 {   
     
     char cip[] = "gofp270"; 
-    key_t key = 12312323;
+    key_t key = KEY_PORT;
     Port port = Port(key);
 
 
@@ -59,7 +59,23 @@ int main()
     //msg.m_texte = "P";
     msg.m_type = 1;
 
-    while (true) {port.Recoit(&msg, sizeof(msg)); cout << "accepted reception ok" << endl; cout << msg.m_texte << endl;}
+    while (true) {
+
+        port.Recoit(&msg, sizeof(msg)); 
+        cout << "accepted reception ok" << endl; 
+        cout << msg.m_texte << endl;
+
+        size_t datasize;
+        FILE* fd = fopen("file.txt", "wb");
+        
+        while (!received)
+        {
+        
+        fwrite(&msg.m_texte, 1, sizeof(msg.m_texte), fd);
+        }
+
+        fclose(fd);
+    }
     
 
 
