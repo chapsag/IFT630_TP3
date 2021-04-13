@@ -67,8 +67,8 @@ for (int i = 0; i < 3; i++) {
 }
 
 
-char c[] = "mem123";
-key_t key = getkey(c);
+char memo[] = "mem123";
+key_t key = getkey(memo);
 
 Mem memory = Mem(key, 1);
 

@@ -38,21 +38,16 @@ int main()
     cout << "accepted send ok" << endl; 
     cout << msg.m_texte << endl;
     
-    FILE *fd = fopen("file.txt", "rb");
+   // FILE *fd = fopen("file.txt", "rb");
 
     size_t rret, wret;
 
     int bytes_read;
 
-    while (!feof(fd)) {
+    cout << "réussi fichier transferé avec succès !" << endl;
+    
 
-        if ((bytes_read = fread(&msg.m_texte, 1, sizeof(msg), fd)) > 0)
-            port.Envoie(&msg, sizeof(msg));
-        else
-            break;
-    }
-
-    fclose(fd);
+    //fclose(fd);
     
     return 0; 
 }
