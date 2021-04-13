@@ -30,7 +30,7 @@ int main()
     Port port = Port(key);
 
 
-    msgbuf msg;
+    msgbuffer msg;
 
     msg.m_type = 1;
 
@@ -43,8 +43,6 @@ int main()
     size_t rret, wret;
 
     int bytes_read;
-
-    cout << "réussi fichier transferé avec succès !" << endl;
     
 
     //fclose(fd);

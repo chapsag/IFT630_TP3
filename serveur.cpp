@@ -29,7 +29,7 @@ int main()
     Port port = Port(key);
 
 
-    msgbuf msg;
+    msgbuffer msg;
     msg.m_type = 1;
 
     while (true) {
