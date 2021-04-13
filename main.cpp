@@ -67,6 +67,12 @@ for (int i = 0; i < 3; i++) {
 }
 
 
+char c[] = "mem123";
+key_t key = getkey(c);
+
+Mem memory = Mem(key, 1);
+
+
 
 
 
