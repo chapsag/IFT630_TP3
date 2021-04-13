@@ -19,8 +19,6 @@
 using namespace std;
 
 int error = errno;
-//short htons(short value); local -> reseau
-//short ntohs(short value); reseau -> local
 
 
 int main() 
